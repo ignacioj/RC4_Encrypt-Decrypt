@@ -10,4 +10,4 @@ archivo_clave: binary file with the key
 The output will be stored in a binary file named archivo_datos.out.dat. 
 It will show the printable characters on screen. 
 
-rc4ed.exe archivo_datos archivo_clave  
+>rc4ed.exe archivo_datos archivo_clave  
