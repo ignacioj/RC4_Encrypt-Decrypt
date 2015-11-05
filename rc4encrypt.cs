@@ -19,9 +19,9 @@ namespace RC4ED
             // decrypt / encrypt
             if (args.Length != 0 && File.Exists(args[0]) && File.Exists(args[1]))
             {
-                outFileName = args[0] + ".out.dat";
                 Content = File.ReadAllBytes(args[0]);
                 Key = File.ReadAllBytes(args[1]);
+                if (args.Length == 3) { outFileName = args[2]; }
                 RC4(ref Content, Key);
                 comprueba = true;
             }
@@ -44,14 +44,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-- archivo_datos: binary file to decode
-- archivo_clave: binary file with the key
+Arguments:
+- data_file: binary file to decode
+- key_file: binary file with the key
+- output_file: if not specified it will display the output on screen
 
-The output will be stored in a binary file named archivo_datos.out.dat.
-It will show the printable characters on screen.
 Usage:
 
->rc4ed.exe archivo_datos archivo_clave 
+>rc4ed.exe data_file key_file output_file
 
 ");
             }
@@ -96,19 +96,22 @@ Usage:
                 //Salida en hex
                 //Console.Write("{0:X2}", (bytes[x]));
                 //Salida caracteres imprimibles
-                if ((bytes[x] < 32) | (bytes[x] == 129) | (bytes[x] == 141)
-                    | (bytes[x] == 143) | (bytes[x] == 144) | (bytes[x] == 157)
-                    | (bytes[x] == 159))
+                if (string.IsNullOrEmpty(outFileName))
                 {
-                    Console.Write(".");
-                }
-                else
-                {
-                    Console.Write(Encoding.Default.GetString(bytes, x, 1));
+                    if ((bytes[x] < 32) | (bytes[x] == 129) | (bytes[x] == 141)
+                        | (bytes[x] == 143) | (bytes[x] == 144) | (bytes[x] == 157)
+                        | (bytes[x] == 159))
+                    {
+                        Console.Write(".");
+                    }
+                    else
+                    {
+                        Console.Write(Encoding.Default.GetString(bytes, x, 1));
+                    }
                 }
             }
             //Salida a archivo
-            File.WriteAllBytes(outFileName, bytes);
+            if (!string.IsNullOrEmpty(outFileName)) { File.WriteAllBytes(outFileName, bytes); }
         }
     }
 }

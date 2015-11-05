@@ -3,11 +3,11 @@ RC4 encryption and decryption tool (c#)
  
 Usage: 
 
-archivo_datos: binary file to decode 
+data_file: binary file to decode 
 
-archivo_clave: binary file with the key 
+key_file: binary file with the key
 
-The output will be stored in a binary file named archivo_datos.out.dat. 
-It will show the printable characters on screen. 
+output_file: if not specified it will display the output on screen
 
->rc4ed.exe archivo_datos archivo_clave  
+
+>rc4ed.exe data_file key_file output_file 
